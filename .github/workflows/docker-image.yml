@@ -1,0 +1,27 @@
+name: automate frontend
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    
+    steps:
+    - name: build
+      run: |
+       echo "Building..."
+  deploy:
+    name: Deploy
+    runs-on: self-hosted
+
+    steps:
+      - name: deploy the container
+        run: docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:1
